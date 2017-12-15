@@ -39,10 +39,10 @@ class User extends Authenticatable
 			'remember_token' => 'string',
 			'created_at' => 'datetime',
 			'updated_at' => 'datetime'
-		]
+		];
 
 		protected $dates = [
 			'created_at',
-			'updated_at'		
-		]
+			'updated_at'
+		];
 }
