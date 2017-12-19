@@ -33,5 +33,12 @@ Route::group(['middleware' => 'auth'], function () {
   // Admin routes
 	Route::group(['middleware' => 'admin'], function () {
 		Route::get('/admin', 'Admin\AccountController@index')->name('admin');
+
+		Route::get('/categories', 'Admin\CategoriesController@index')->name('categories');
+		Route::get('/categories/add', 'Admin\CategoriesController@addCategory')->name('categories.add');
+		Route::get('/categories/edit/{id}', 'Admin\CategoriesController@editCategory')
+				->where('id', '\d+')
+				->name('categories.edit');
+		Route::delete('/categories/delete', 'Admin\CategoriesController@deleteCategory')->name('categories.delete');
 	});
 });
