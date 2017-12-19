@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/my/account';
 
     /**
      * Create a new controller instance.
@@ -40,25 +40,24 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-		public function register(Request $request)
+    public function register(Request $request)
     {
         try {
-        	$this->validator($request->all())->validate();
+            $this->validator($request->all())->validate();
         } catch (\Exception $e) {
-					// dd("There are some errors...");
-					dd($e);
+            return back()->with('error', $e->getMessage());
         }
-				$email = $request->input('email');
-				$password = $request->input('password');
-				$isAuth = $request->has('remember') ? true : false;
-				$objUser = $this->create(['email' => $email, 'password' => $password]);
-				if(!($objUser instanceof User)) {
-					// throw new \Exception("Error creating User object");
-				}
-				if ($isAuth) {
-					$this->guard()->login($objUser);
-				}
-				return redirect(route('account'))->with('success', 'You are registered successfully!');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $isAuth = $request->has('remember') ? true : false;
+        $objUser = $this->create(['email' => $email, 'password' => $password]);
+        if (!($objUser instanceof User)) {
+            // throw new \Exception("Error creating User object");
+        }
+        if ($isAuth) {
+            $this->guard()->login($objUser);
+        }
+        return redirect(route('account'))->with('success', 'You are registered successfully!');
     }
 
     /**

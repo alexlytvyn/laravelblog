@@ -38,5 +38,8 @@
       </form>
 
     </div> <!-- /container -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+		@include('inc.messages')
   </body>
 </html>
