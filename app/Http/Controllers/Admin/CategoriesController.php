@@ -12,7 +12,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $objCategory = new Category();
-				$categories = $objCategory->get();
+        $categories = $objCategory->get();
         return view('admin.categories.index', ['categories' => $categories]);
     }
 
@@ -46,6 +46,38 @@ class CategoriesController extends Controller
 
     public function editCategory(int $id)
     {
+        $category = Category::find($id);
+        if (!$category) {
+            return abort(404);
+        } else {
+            return view('admin.categories.edit', ['category' => $category]);
+        }
+    }
+
+    public function editRequestCategory(Request $request, int $id)
+    {
+        try {
+            $this->validate($request, [
+                'title' => 'required|string|min:3|max:50'
+                ]);
+            $objCategory = Category::find($id);
+            if ($objCategory) {
+                $objCategory->title = $request->input('title');
+                $objCategory->description = $request->input('description');
+            } else {
+                return abort(404);
+            }
+
+            if ($objCategory->save()) {
+                return redirect(route('categories'))->with('success', 'The Category was edited successfully!');
+            } else {
+                return back()->with('error', 'The Category was not edited!');
+            }
+            dd($request->all());
+        } catch (ValidationException $e) {
+            \Log::error($e->getMessage());
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     public function deleteCategory(Request $request)

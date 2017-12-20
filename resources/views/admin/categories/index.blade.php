@@ -23,7 +23,7 @@
 						<td>{!! $category->description !!}</td>
 						<td>{{$category->created_at->format('d-m-Y H:i')}}</td>
 						<td>{{$category->updated_at->format('d-m-Y H:i')}}</td>
-						<td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+						<td><a href="{{ route('categories.edit', ['id' => $category->id]) }}">Edit</a> | <a href="#">Delete</a></td>
 					</tr>
 				@endforeach
 			</tbody>
