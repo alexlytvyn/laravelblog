@@ -11,7 +11,9 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        return view('admin.categories.index');
+        $objCategory = new Category();
+				$categories = $objCategory->get();
+        return view('admin.categories.index', ['categories' => $categories]);
     }
 
     public function addCategory()
@@ -21,25 +23,25 @@ class CategoriesController extends Controller
 
     public function addRequestCategory(Request $request)
     {
-			try {
-				$this->validate($request, [
-					'title' => 'required|string|min:3|max:50'
-				]);
-				$objCategory = new Category();
-				$objCategory = $objCategory->create([
-					'title' => $request->input('title'),
-					'description' => $request->input('description')
-				]);
-				if ($objCategory) {
-					return back()->with('success', 'The Category was added successfully!');
-				} else {
-					return back()->with('error', 'The Category was not added!');
-				}
-				dd($request->all());
-			} catch (ValidationException $e) {
-				\Log::error($e->getMessage());
-				return back()->with('error', $e->getMessage());
-			}
+        try {
+            $this->validate($request, [
+                    'title' => 'required|string|min:3|max:50'
+                ]);
+            $objCategory = new Category();
+            $objCategory = $objCategory->create([
+                    'title' => $request->input('title'),
+                    'description' => $request->input('description')
+                ]);
+            if ($objCategory) {
+                return back()->with('success', 'The Category was added successfully!');
+            } else {
+                return back()->with('error', 'The Category was not added!');
+            }
+            dd($request->all());
+        } catch (ValidationException $e) {
+            \Log::error($e->getMessage());
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     public function editCategory(int $id)
