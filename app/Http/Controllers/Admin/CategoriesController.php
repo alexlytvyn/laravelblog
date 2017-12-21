@@ -25,7 +25,8 @@ class CategoriesController extends Controller
     {
         try {
             $this->validate($request, [
-                    'title' => 'required|string|min:3|max:50'
+                    'title' => 'required|string|min:3|max:50',
+										'description' => 'required'
                 ]);
             $objCategory = new Category();
             $objCategory = $objCategory->create([
@@ -33,7 +34,7 @@ class CategoriesController extends Controller
                     'description' => $request->input('description')
                 ]);
             if ($objCategory) {
-                return back()->with('success', 'The Category was added successfully!');
+                return redirect(route('categories'))->with('success', 'The Category was added successfully!');
             } else {
                 return back()->with('error', 'The Category was not added!');
             }
@@ -58,7 +59,8 @@ class CategoriesController extends Controller
     {
         try {
             $this->validate($request, [
-                'title' => 'required|string|min:3|max:50'
+                'title' => 'required|string|min:3|max:50',
+								'description' => 'required'
                 ]);
             $objCategory = Category::find($id);
             if ($objCategory) {
@@ -80,9 +82,13 @@ class CategoriesController extends Controller
         }
     }
 
-    public function deleteCategory(Request $request)
-    {
-        if ($request->ajax()) {
-        }
-    }
+		public function deleteCategory(Request $request)
+	{
+			if($request->ajax()) {
+					 $id = (int)$request->input('id');
+					 $objCategory = new Category();
+					 $objCategory->where('id', $id)->delete();
+					 echo "Successful deleting!";
+			}
+	}
 }
