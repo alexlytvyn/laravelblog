@@ -37,12 +37,12 @@
 		$(document).ready(function() {
 			$(".delete").on('click', function () {
 					if(confirm("Are you sure you want to delete this Category?")) {
-						var id = $(this).attr("catid");
+						let id = $(this).attr("catid");
 						$.ajax({
 							type: "DELETE",
 							url: "{{route('categories.delete')}}",
 							data: {_token:"{{csrf_token()}}", id:id},
-							complete: function() {
+							success: function() {
 								alert("The Category was deleted!");
 								location.reload();
 							}

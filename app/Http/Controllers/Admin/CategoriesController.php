@@ -26,7 +26,7 @@ class CategoriesController extends Controller
         try {
             $this->validate($request, [
                     'title' => 'required|string|min:3|max:50',
-										'description' => 'required'
+                                        'description' => 'required'
                 ]);
             $objCategory = new Category();
             $objCategory = $objCategory->create([
@@ -60,7 +60,7 @@ class CategoriesController extends Controller
         try {
             $this->validate($request, [
                 'title' => 'required|string|min:3|max:50',
-								'description' => 'required'
+                                'description' => 'required'
                 ]);
             $objCategory = Category::find($id);
             if ($objCategory) {
@@ -82,13 +82,13 @@ class CategoriesController extends Controller
         }
     }
 
-		public function deleteCategory(Request $request)
-	{
-			if($request->ajax()) {
-					 $id = (int)$request->input('id');
-					 $objCategory = new Category();
-					 $objCategory->where('id', $id)->delete();
-					 echo "Successful deleting!";
-			}
-	}
+    public function deleteCategory(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = (int)$request->input('id');
+            $objCategory = new Category();
+            $objCategory->where('id', $id)->delete();
+            echo "Successful deleting!";
+        }
+    }
 }

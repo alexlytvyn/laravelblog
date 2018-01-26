@@ -47,6 +47,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 		/* Articles routes */
 		Route::get('/articles', 'Admin\ArticlesController@index')->name('articles');
+		Route::get('/articles/view/{id}', 'Admin\ArticlesController@viewArticle')
+				->where('id', '\d+')
+				->name('articles.view');
 		Route::get('/articles/add', 'Admin\ArticlesController@addArticle')->name('articles.add');
 		Route::post('/articles/add', 'Admin\ArticlesController@addRequestArticle');
 		Route::get('/articles/edit/{id}', 'Admin\ArticlesController@editArticle')

@@ -13,6 +13,8 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/dashboard.css" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   </head>
 
   <body>
@@ -54,28 +56,13 @@
               <a class="nav-link" href="{{route('categories')}}">Categories</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Articles</a>
+              <a class="nav-link" href="{{route('articles')}}">Articles</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Users</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Comments</a>
-            </li>
-          </ul>
-
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Nav item</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Nav item again</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">One more nav</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Another nav item</a>
             </li>
           </ul>
         </nav>
