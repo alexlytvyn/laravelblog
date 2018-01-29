@@ -69,9 +69,16 @@ class ArticlesController extends Controller
             return abort(404);
         }
 
+				$mainCategories = $objArticle->categories;
+				$arrCategories = [];
+				foreach ($mainCategories as $category) {
+					$arrCategories[] = $category->id;
+				}
+
         return view('admin.articles.edit', [
                 'categories' => $categories,
-                'article' => $objArticle
+                'article' => $objArticle,
+								'arrCategories' => $arrCategories
             ]);
     }
 
@@ -88,6 +95,19 @@ class ArticlesController extends Controller
 				$objArticle->author = $request->input('author');
 
 				if ($objArticle->save()) {
+						// Оновлюємо прив'язку до категорії
+						$objArticleCategory = new CategoryArticle();
+						$objArticleCategory->where('article_id', $objArticle->id)->delete();
+
+						$arrCategories = $request->input('categories');
+						if (is_array($arrCategories)) {
+							foreach ($arrCategories as $category) {
+								$objArticleCategory->create([
+									'category_id' => $category,
+									'article_id' => $objArticle->id
+								]);
+							}
+						}
 						return redirect(route('articles'))->with('success', 'The Article was edited successfully!');
 				} else {
 						return back()->with('error', 'The Article was not edited!');

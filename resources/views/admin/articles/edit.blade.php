@@ -8,7 +8,8 @@
 			<label for="title">Select Category or Categories</label>
 			<select name="categories[]" class="form-control" multiple>
 				@foreach ($categories as $category)
-					<option value="{{$category->id}}">{{$category->title}}</option>
+					<option value="{{$category->id}}"
+						@if (in_array($category->id, $arrCategories)) selected @endif>{{$category->title}}</option>
 				@endforeach
 			</select>
 			<br>
